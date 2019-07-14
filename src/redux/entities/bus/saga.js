@@ -1,14 +1,14 @@
 import { call, put } from 'redux-saga/effects'
 
 import { isUpdating, updated, updateFailed, isAdding, added, addingFailed } from './actions'
-import api from '../../api'
+import api from '../../../api/api.js'
 
 
 export function * updateBusSaga(action) {
     yield put(isUpdating())
 
     try {
-        const response = yield call(api.updateBusStatus, action.payload)
+        const response = yield call(api.updateBus, action.payload)
         yield put(updated())
     }
     catch(error) {

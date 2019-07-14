@@ -16,7 +16,7 @@ const fetchAllDrivers = () => {
 const addDriver = driver => {
   //
 };
-const updateDrivers = driver => {
+const updateDriver = driver => {
   //
 };
 
@@ -26,5 +26,5 @@ export default {
   updateBus,
   fetchAllDrivers,
   addDriver,
-  updateDrivers
+  updateDriver
 };

@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { isFetching, fetched, fetchFailed, fetch } from "./actions";
-import api from "../../api";
+import api from "../../../api/api.js";
 
 function* fetchBusesSaga() {
   yield put(isFetching());
