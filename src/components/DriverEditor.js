@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  ScrollView,  
+  ScrollView,
   TouchableOpacity,
-  StyleSheet,  
+  StyleSheet
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Fumi } from "react-native-textinput-effects";
@@ -46,10 +46,9 @@ export default class DriverEditor extends Component {
           justifyContent: "center"
         }}
       >
-        <Text style={styles.textLabel}>Редактор водителя</Text>
-
         <ScrollView>
           <Fumi
+            value={driver.fullName}
             label={"ФИО водителя"}
             iconClass={Icon}
             iconName={"person"}
@@ -111,7 +110,7 @@ export default class DriverEditor extends Component {
                 onChange={selectBusModel}
               />
             ) : (
-              <Text style={{textAlign:"center"}}>
+              <Text style={{ textAlign: "center" }}>
                 нет доступных моделей автобусов
               </Text>
             )}

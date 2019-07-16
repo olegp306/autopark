@@ -57,7 +57,9 @@ class DriversScreen extends Component {
               }}
             >
               <Text
-                onPress={() => console.log("редактировать " + item.id)}
+                onPress={() =>
+                  this.props.navigation.navigate("Driver", { item })
+                }
                 style={[styles.textButton, { color: "#0476FA" }]}
               >
                 редактировать

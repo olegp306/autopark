@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-import { add as addDriver } from "../redux/entities/driver/actions";
+import { add as addDriver, update as updateDriver } from "../redux/entities/driver/actions";
 import { MaterialIcons } from "@expo/vector-icons";
 import DriverEditor from "../components/DriverEditor";
 
@@ -11,24 +11,24 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addDriver: driver => dispatch(addDriver(driver))
+    addDriver: driver => dispatch(addDriver(driver)),
+    updateDriver: driver=>dispatch(updateDriver(driver))    
   };
 };
 
 class DriverScreen extends Component {
   constructor(props) {
     super(props);
+
     this.state = {};
   }
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Новый водитель",
+      title: "Редактор водителя",
       headerRight: (
-        <View style={{ flexDirection: "row", paddingRight: 7 }}>
-          <TouchableOpacity onPress={navigation.getParam("save")}>
-            <MaterialIcons name="done" size={28} color="#53565A" />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={navigation.getParam("save")}>
+          <Text style={styles.rightTitleText}>сохранить</Text>
+        </TouchableOpacity>
       )
     };
   };
@@ -37,12 +37,21 @@ class DriverScreen extends Component {
     this.props.navigation.setParams({ validation: this.driverValidation });
   }
   componentWillMount = () => {
-    const driver = {
-      fullName: "",
-      birthday: null,
-      busModelText: "",
-      busAbleToDrive: []
-    };
+    let driver = {};
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.item
+    ) {
+      driver = this.props.navigation.state.params.item;
+    } else {
+      driver = {
+        fullName: "",
+        birthday: null,
+        busModelText: "",
+        busAbleToDrive: []
+      };
+    }
+
     this.setState({ driver: driver });
   };
 
@@ -70,7 +79,13 @@ class DriverScreen extends Component {
     if (validationResult.result == false) {
       alert(validationResult.validationMessage);
     } else {
-      this.props.addDriver(driver);
+      if (driver.id) {
+        this.props.updateDriver(driver);
+      } else {
+        this.props.addDriver(driver);
+      }
+
+      this.props.navigation.navigate("Drivers");
     }
   };
 
@@ -117,3 +132,13 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(DriverScreen);
+
+const styles = StyleSheet.create({
+  rightTitleText: {
+    paddingRight: 15,
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#0476FA",
+    justifyContent: "center"
+  }
+});
