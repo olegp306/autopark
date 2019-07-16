@@ -6,7 +6,9 @@ import {
   updateFailed,
   isAdding,
   added,
-  addingFailed
+  addingFailed,
+  isRemoving,
+  removingFailed
 } from "./actions";
 import api from "../../../api/api.js";
 
@@ -29,5 +31,16 @@ export function* addDriverSaga(action) {
     yield put(added());
   } catch (error) {
     yield put(addingFailed(error));
+  }
+}
+
+export function* removeDriverSaga(action) {
+  yield put(isRemoving());
+
+  try {
+    const response = yield call(api.removeDriver, action.payload);
+    yield put(removed());
+  } catch (error) {
+    yield put(removingFailed(error));
   }
 }
