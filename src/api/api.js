@@ -11,7 +11,9 @@ const updateBus = bus => {
 };
 
 const fetchAllDrivers = () => {
-  return AsyncStorage.getItem("@autoparkmobapp2:drivers");
+  return AsyncStorage.getItem("@autoparkmobapp2:drivers").then(response =>
+    JSON.parse(response)
+  );
 };
 
 const addDriver = async driver => {
