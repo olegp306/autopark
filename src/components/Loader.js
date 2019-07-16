@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column', 
         justifyContent: 'center', 
         alignItems: 'center', 
-        width: Metrics.screenWidth, 
-        height: Metrics.screenHeight - Metrics.navBarHeight, 
+        width: "90%", 
+        height: "90%", 
         backgroundColor: 'rgba(0,0,0,0)'
     },
     dialog: {
