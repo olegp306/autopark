@@ -1,0 +1,1 @@
+export const getDrivers = store => store.drivers.toJS()
