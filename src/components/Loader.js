@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { View, ActivityIndicator, StyleSheet, Text } from 'react-native'
 
-import { Metrics } from '../theme'
-
 export default Loader = props => {
     return (
         <View style={{flex: 1}}>
