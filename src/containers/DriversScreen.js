@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Text, StyleSheet, Button, FlatList } from "react-native";
+import { View, Text, StyleSheet,  FlatList } from "react-native";
 import { getDrivers } from "../redux/selectors";
 import { fetch as fetchDrivers } from "../redux/entities/drivers/actions";
 import {
@@ -9,6 +9,7 @@ import {
 } from "../redux/entities/driver/actions";
 
 import DriverSm from "../components/DriverSm";
+import Loader from "../components/Loader";
 
 const mapStateToProps = store => {
   return {
@@ -39,27 +40,18 @@ class DriversScreen extends Component {
     };
   };
 
-  driversListRender = () => {
-    const { drivers, removeDriver } = this.props;
+  driversListRender = items => {
+    const { removeDriver, navigation } = this.props;
     return (
       <FlatList
-        data={drivers.items}
+        data={items}
         keyExtractor={(item, index) => item.id}
         renderItem={({ item }) => (
           <View key={item.id} style={{ backgroundColor: "#f7f7f7" }}>
             <DriverSm driver={item} />
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                borderBottomWidth: 2,
-                borderBottomColor: "white"
-              }}
-            >
+            <View style={styles.buttonsContainer}>
               <Text
-                onPress={() =>
-                  this.props.navigation.navigate("Driver", { item })
-                }
+                onPress={() => navigation.navigate("Driver", { item })}
                 style={[styles.textButton, { color: "#0476FA" }]}
               >
                 редактировать
@@ -82,7 +74,13 @@ class DriversScreen extends Component {
   }
 
   render() {
-    return <View>{this.driversListRender()}</View>;
+    const { items, isFetching } = this.props.drivers;
+
+    return (
+      <Loader message="загрузка" isLoading={isFetching}>
+        <View>{this.driversListRender(items)}</View>
+      </Loader>
+    );
   }
 }
 export default connect(
@@ -103,5 +101,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    borderBottomWidth: 2,
+    borderBottomColor: "white"
   }
 });
