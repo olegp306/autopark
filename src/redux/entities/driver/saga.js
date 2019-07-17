@@ -10,7 +10,8 @@ import {
   added,
   addingFailed,
   isRemoving,
-  removingFailed
+  removingFailed,
+  removed
 } from "./actions";
 import api from "../../../api/api.js";
 
