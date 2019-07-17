@@ -1,5 +1,7 @@
 import { call, put } from "redux-saga/effects";
 
+import {fetch as fetchDriver} from "../drivers/actions"
+
 import {
   isUpdating,
   updated,
@@ -18,6 +20,7 @@ export function* updateDriverSaga(action) {
   try {
     const response = yield call(api.updateDriver, action.payload);
     yield put(updated());
+    yield put(fetchDriver());    
   } catch (error) {
     yield put(updateFailed(error));
   }
@@ -29,6 +32,7 @@ export function* addDriverSaga(action) {
   try {
     const response = yield call(api.addDriver, action.payload);
     yield put(added());
+    yield put(fetchDriver());    
   } catch (error) {
     yield put(addingFailed(error));
   }
@@ -40,6 +44,7 @@ export function* removeDriverSaga(action) {
   try {
     const response = yield call(api.removeDriver, action.payload);
     yield put(removed());
+    yield put(fetchDriver());    
   } catch (error) {
     yield put(removingFailed(error));
   }
