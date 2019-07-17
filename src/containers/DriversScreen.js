@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Text, StyleSheet,  FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { getDrivers } from "../redux/selectors";
 import { fetch as fetchDrivers } from "../redux/entities/drivers/actions";
 import {
@@ -75,10 +75,11 @@ class DriversScreen extends Component {
 
   render() {
     const { items, isFetching } = this.props.drivers;
+    const orderedItems = items.sort((a, b) => a.fullName > b.fullName);
 
     return (
       <Loader message="загрузка" isLoading={isFetching}>
-        <View>{this.driversListRender(items)}</View>
+        <View>{this.driversListRender(orderedItems)}</View>
       </Loader>
     );
   }
