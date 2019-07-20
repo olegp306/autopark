@@ -6,9 +6,9 @@ function* fetchBusesSaga() {
   yield put(isFetching());
 
   try {
-    yield call(api.fetchAllBuses);
+    response= yield call(api.fetchAllBuses);
 
-    yield put(fetched(response.data));
+    yield put(fetched(response));
   } catch (error) {
     yield put(fetchFailed(error));
   }
