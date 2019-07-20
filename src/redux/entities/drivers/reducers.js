@@ -1,9 +1,9 @@
 import { Map } from "immutable";
 import {
   FETCH_DRIVERS_REQUEST,
-  IS_FETCHING,
-  FETCHED,
-  FETCH_FAILED
+  IS_FETCHING_DRIVERS,
+  FETCHED_DRIVERS,
+  FETCH_DRIVERS_FAILED
 } from "./actions";
 
 const initialState = Map({
@@ -18,17 +18,17 @@ export default (driversReducer = (state = initialState, action) => {
     case FETCH_DRIVERS_REQUEST:
       return state.merge({ isFetching: false, fetched: false, error: null });
 
-    case IS_FETCHING:
+    case IS_FETCHING_DRIVERS:
       return state.merge({ isFetching: true });
 
-    case FETCHED:
+    case FETCHED_DRIVERS:
       return state.merge({
         isFetching: false,
         fetched: true,
         items: [...action.payload]
       });
 
-    case FETCH_FAILED:
+    case FETCH_DRIVERS_FAILED:
       return state.merge({ isFetching: false, error: action.payload });
 
     default:

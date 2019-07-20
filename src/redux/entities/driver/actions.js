@@ -1,18 +1,18 @@
 export const UPDATE_DRIVER_REQUEST = "UPDATE_DRIVER_REQUEST";
-export const IS_UPDATING = "IS_UPDATING";
-export const UPDATED = "UPDATED";
-export const UPDATE_FAILED = "UPDATE_FAILED";
+export const IS_UPDATING_DRIVER = "IS_UPDATING_DRIVER";
+export const UPDATED_DRIVER= "UPDATED_DRIVER";
+export const UPDATE_DRIVER_FAILED = "UPDATE_DRIVER_FAILED";
 
 export const ADD_DRIVER_REQUEST = "ADD_DRIVER_REQUEST";
-export const IS_ADDING = "IS_ADDING";
-export const ADDED = "ADDED";
-export const ADDING_FAILED = "ADDING_FAILED";
+export const IS_ADDING_DRIVER = "IS_ADDING_DRIVER";
+export const ADDED_DRIVER = "ADDED_DRIVER";
+export const ADDING_FAILED_DRIVER = "ADDING_FAILED_DRIVER";
 
 
 export const REMOVE_DRIVER_REQUEST = "REMOVE_DRIVER_REQUEST";
-export const IS_REMOVING = "IS_REMOVING";
-export const REMOVED = "REMOVED";
-export const REMOVING_FAILED = "REMOVING_FAILED";
+export const IS_REMOVING_DRIVER = "IS_REMOVING_DRIVER";
+export const REMOVED_DRIVER = "REMOVED_DRIVER";
+export const REMOVING_FAILED_DRIVER = "REMOVING_FAILED_DRIVER";
 
 export const update = driver => {
   return {
@@ -23,20 +23,20 @@ export const update = driver => {
 
 export const isUpdating = payload => {
   return {
-    type: IS_UPDATING,
+    type: IS_UPDATING_DRIVER,
     payload: payload
   };
 };
 
 export const updated = () => {
   return {
-    type: UPDATED
+    type: UPDATED_DRIVER
   };
 };
 
 export const updateFailed = error => {
   return {
-    type: UPDATE_FAILED,
+    type: UPDATE_DRIVER_FAILED,
     payload: error
   };
 };
@@ -50,20 +50,20 @@ export const add = driver => {
 
 export const isAdding = payload => {
   return {
-    type: IS_ADDING,
+    type: IS_ADDING_DRIVER,
     payload: payload
   };
 };
 
 export const added = () => {
   return {
-    type: ADDED
+    type: ADDED_DRIVER
   };
 };
 
 export const addingFailed = error => {
   return {
-    type: ADDING_FAILED,
+    type: ADDING_DRIVER_FAILED,
     payload: error
   };
 };
@@ -77,20 +77,20 @@ export const remove = driver => {
 
 export const isRemoving = payload => {
   return {
-    type: IS_REMOVING,
+    type: IS_REMOVING_DRIVER,
     payload: payload
   };
 };
 
 export const removed = () => {
   return {
-    type: REMOVED
+    type: REMOVED_DRIVER
   };
 };
 
 export const removingFailed = error => {
   return {
-    type: REMOVING_FAILED,
+    type: REMOVING_DRIVER_FAILED,
     payload: error
   };
 };
