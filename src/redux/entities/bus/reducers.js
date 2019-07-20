@@ -1,6 +1,6 @@
 import { Map } from 'immutable'
-import { UPDATE_BUS_REQUEST, IS_UPDATING, UPDATED, UPDATE_FAILED, } from "./actions"
-import { ADD_BUS_REQUEST, IS_ADDING, ADDED, ADDING_FAILED } from './actions'
+import { UPDATE_BUS_REQUEST, IS_UPDATING_BUS, UPDATED_BUS, UPDATE_BUS_FAILED, } from "./actions"
+import { ADD_BUS_REQUEST, IS_ADDING_BUS, ADDED_BUS, ADDING_BUS_FAILED } from './actions'
 
 const initialState = Map({
     item: null,
@@ -17,26 +17,26 @@ export default busReducer = (state = initialState, action) => {
         case UPDATE_BUS_REQUEST:
             return initialState
 
-        case IS_UPDATING:
+        case IS_UPDATING_BUS:
             return state.merge({ isUpdating: true })
 
-        case UPDATED:
+        case UPDATED_BUS:
             return state.merge({ isUpdating: false, updated: true })
 
-        case UPDATE_FAILED:
+        case UPDATE_BUS_FAILED:
             return state.merge({ isUpdating: false, error: action.payload })    
 
 
         case ADD_BUS_REQUEST:
             return initialState
 
-        case IS_ADDING:
+        case IS_ADDING_BUS:
             return state.merge({ isAdding: true })
 
-        case ADDED:
+        case ADDED_BUS:
             return state.merge({ isAdding: false, added: true })
 
-        case ADDING_FAILED:
+        case ADDING_BUS_FAILED:
             return state.merge({ isAdding: false, error: action.payload })
             
 
