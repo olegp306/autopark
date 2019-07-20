@@ -1,24 +1,62 @@
 import { AsyncStorage } from "react-native";
+
 const fetchAllBuses = () => {
-  //
+  return AsyncStorage.getItem("@autoparkmobapp8:buses").then(response =>
+    JSON.parse(response)
+  );
 };
 
-const addBus = bus => {
-  //
+const addBus = async bus => {
+  bus.id = "a" + Math.random() * 30000;
+  let buses = await AsyncStorage.getItem("@autoparkmobapp8:buses");
+
+  let result = [];
+  if (buses == null) {
+    result.push(bus); //JSON.stringify(driver);
+  } else {
+    const busesAr = JSON.parse(buses);
+    busesAr.push(bus);
+    result = busesAr;
+  }
+  return AsyncStorage.setItem("@autoparkmobapp8:buses", JSON.stringify(result));
 };
-const updateBus = bus => {
-  //
+
+const updateBus = async bus => {
+  const buses = await AsyncStorage.getItem("@autoparkmobapp8:buses");
+  const busesAr = JSON.parse(buses);
+
+  let result = busesAr.filter(item => item.id != bus.id);
+  result.push(bus);
+  return AsyncStorage.setItem(
+    "@autoparkmobapp8:buses",
+    JSON.stringify(result)
+  );
 };
+
+const removeBus= async bus => {
+  let buses = await AsyncStorage.getItem("@autoparkmobapp8:buses");
+  let result = [];
+  if (buses != null) {
+    result = JSON.parse(buses).filter(function(item) {
+      return item.id != bus.id;
+    });
+  }
+  return AsyncStorage.setItem(
+    "@autoparkmobapp8:buses",
+    JSON.stringify(result)
+  );
+};
+
 
 const fetchAllDrivers = () => {
-  return AsyncStorage.getItem("@autoparkmobapp6:drivers").then(response =>
+  return AsyncStorage.getItem("@autoparkmobapp8:drivers").then(response =>
     JSON.parse(response)
   );
 };
 
 const addDriver = async driver => {
   driver.id = "a" + Math.random() * 30000;
-  let drivers = await AsyncStorage.getItem("@autoparkmobapp6:drivers");
+  let drivers = await AsyncStorage.getItem("@autoparkmobapp8:drivers");
 
   let result = [];
   if (drivers == null) {
@@ -26,36 +64,36 @@ const addDriver = async driver => {
   } else {
     const driverAr = JSON.parse(drivers);
     driverAr.push(driver);
-    result=driverAr;
+    result = driverAr;
   }
   return AsyncStorage.setItem(
-    "@autoparkmobapp6:drivers",
+    "@autoparkmobapp8:drivers",
     JSON.stringify(result)
   );
 };
 
 const updateDriver = async driver => {
-  const drivers = await AsyncStorage.getItem("@autoparkmobapp6:drivers");
-  const driversAr = JSON.parse(drivers);
+  const items = await AsyncStorage.getItem("@autoparkmobapp8:drivers");
+  const itemsAr = JSON.parse(items);
 
-  let result = driversAr.filter(item => item.id != driver.id);
+  let result = itemsAr.filter(item => item.id != driver.id);
   result.push(driver);
   return AsyncStorage.setItem(
-    "@autoparkmobapp6:drivers",
+    "@autoparkmobapp8:drivers",
     JSON.stringify(result)
   );
 };
 
 const removeDriver = async driver => {
-  let drivers = await AsyncStorage.getItem("@autoparkmobapp6:drivers");
+  let items = await AsyncStorage.getItem("@autoparkmobapp8:drivers");
   let result = [];
-  if (drivers != null) {
-    result = JSON.parse(drivers).filter(function(item) {
+  if (items != null) {
+    result = JSON.parse(items).filter(function(item) {
       return item.id != driver.id;
     });
   }
   return AsyncStorage.setItem(
-    "@autoparkmobapp6:drivers",
+    "@autoparkmobapp8:drivers",
     JSON.stringify(result)
   );
 };
@@ -63,6 +101,8 @@ const removeDriver = async driver => {
 export default {
   fetchAllBuses,
   addBus,
+  updateBus,
+  removeBus,
   updateBus,
   fetchAllDrivers,
   addDriver,
