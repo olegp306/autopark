@@ -30,7 +30,7 @@ export default class MainScreen extends Component {
           <BigButtonWithBadgeComponent
             buttonText={"маршрут"}
             buttonSmallText={"поиск маршрутов между точками"}
-            onPress={() => this.props.navigation.navigate("Cities")}
+            onPress={() => this.props.navigation.navigate("RoutePoints")}
           />
         </View>
         <View style={styles.bottom}>
