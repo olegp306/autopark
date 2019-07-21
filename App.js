@@ -5,7 +5,10 @@ import DriversScreen from "./src/containers/DriversScreen";
 import DriverScreen from "./src/containers/DriverScreen";
 import BusesScreen from "./src/containers/BusesScreen";
 import BusScreen from "./src/containers/BusScreen";
-import CitiesScreen from "./src/containers/CitiesScreen";
+import RoutePointsScreen from "./src/containers/RoutePointsScreen";
+import RoutesScreen from "./src/containers/RoutesScreen";
+
+
 
 import { createStackNavigator, createAppContainer } from "react-navigation";
 
@@ -19,7 +22,8 @@ const AppNavigator = createStackNavigator(
     Driver: { screen: DriverScreen },
     Buses: { screen: BusesScreen },
     Bus: { screen: BusScreen },
-    Cities: { screen: CitiesScreen }
+    RoutePoints: { screen: RoutePointsScreen },
+    Routes: { screen: RoutesScreen },
   },
   {
     initialRouteName: "Main",

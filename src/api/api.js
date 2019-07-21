@@ -1,4 +1,36 @@
 import { AsyncStorage } from "react-native";
+import axios from 'axios'
+
+const conf = {
+  //baseURL: API_SERVER_URL,
+  headers: { 'Cache-Control': 'no-cache' },
+  timeout: 15000 
+}
+const dadaToken="5d14cbb232618388cf7ab1c71f84e283d3a3e9c0"
+const instance = axios.create(conf)
+const onError = (error) => {
+  if (error.response) {
+      console.warn('axios onError', error.response)
+
+      if (error.response.status === 400) {
+          throw Error('Не верный логин или пароль')
+      } else if (error.response.status > 400) {
+          throw Error('При обработке запроса на сервере произошла ошибка, мы ее зафиксировали и уже разбираемся в причинах.')
+      }
+  } else if (error.request) {
+      console.warn('axios onError', error.request)
+      throw Error('Сервер недоступен. Проверьте свое интернет-соединение')
+  } else {
+      console.warn('Error', error.message)
+  }
+  console.log(error.config)
+}
+
+const fetchAdressSuggestions=(queryText)=>{
+  let queryStr={ "query": queryText, "count": 10 };  
+  instance.defaults.headers.authorization=`Token ${dadaToken}`
+  return instance.post('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address', queryStr ).catch(onError)
+}
 
 const fetchAllBuses = () => {
   return AsyncStorage.getItem("@autoparkmobapp8:buses").then(response =>
@@ -107,5 +139,6 @@ export default {
   fetchAllDrivers,
   addDriver,
   updateDriver,
-  removeDriver
+  removeDriver,
+  fetchAdressSuggestions
 };
