@@ -67,7 +67,7 @@ class DriverScreen extends Component {
         : "";
     validationMessage +=
       driver.busAbleToDrive == ""
-        ? "У Водителя должен быть хобя бы одна модель автобуса, которой он может управлять. "
+        ? "У Водителя должна быть хотя бы одна модель автобуса, которой он может управлять. "
         : "";
     if (validationMessage == "") return { result: true };
     return { result: false, validationMessage: validationMessage };
