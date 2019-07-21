@@ -18,6 +18,9 @@ import {
   removeDriverSaga
 } from "./entities/driver/saga";
 
+import { FETCH_SUGGESTIONS_REQUEST } from "./dadata/actions";
+import suggestionsAddressSaga from "./dadata/saga";
+
 function* sagaWatcher() {
   yield takeLatest(FETCH_BUSES_REQUEST, busesSaga);
   yield takeLatest(UPDATE_BUS_REQUEST, updateBusSaga);
@@ -28,6 +31,8 @@ function* sagaWatcher() {
   yield takeLatest(UPDATE_DRIVER_REQUEST, updateDriverSaga);
   yield takeLatest(ADD_DRIVER_REQUEST, addDriverSaga);
   yield takeLatest(REMOVE_DRIVER_REQUEST, removeDriverSaga);
+
+  yield takeLatest(FETCH_SUGGESTIONS_REQUEST, suggestionsAddressSaga);
 }
 
 export default sagaWatcher;
