@@ -2,7 +2,11 @@ import { takeLatest } from "redux-saga/effects";
 
 import { FETCH_BUSES_REQUEST } from "./entities/buses/actions";
 import busesSaga from "./entities/buses/saga";
-import { UPDATE_BUS_REQUEST, ADD_BUS_REQUEST ,REMOVE_BUS_REQUEST} from "./entities/bus/actions";
+import {
+  UPDATE_BUS_REQUEST,
+  ADD_BUS_REQUEST,
+  REMOVE_BUS_REQUEST
+} from "./entities/bus/actions";
 import { updateBusSaga, addBusSaga, removeBusSaga } from "./entities/bus/saga";
 
 import { FETCH_DRIVERS_REQUEST } from "./entities/drivers/actions";
@@ -21,6 +25,9 @@ import {
 import { FETCH_SUGGESTIONS_REQUEST } from "./dadata/actions";
 import suggestionsAddressSaga from "./dadata/saga";
 
+import { FETCH_ROUTES_REQUEST } from "./entities/routes/actions";
+import routesSaga from "./entities/routes/saga";
+
 function* sagaWatcher() {
   yield takeLatest(FETCH_BUSES_REQUEST, busesSaga);
   yield takeLatest(UPDATE_BUS_REQUEST, updateBusSaga);
@@ -33,6 +40,8 @@ function* sagaWatcher() {
   yield takeLatest(REMOVE_DRIVER_REQUEST, removeDriverSaga);
 
   yield takeLatest(FETCH_SUGGESTIONS_REQUEST, suggestionsAddressSaga);
+
+  yield takeLatest(FETCH_ROUTES_REQUEST, routesSaga);
 }
 
 export default sagaWatcher;

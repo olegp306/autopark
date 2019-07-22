@@ -1,46 +1,68 @@
 import { AsyncStorage } from "react-native";
-import axios from 'axios'
+import axios from "axios";
 
 const conf = {
   //baseURL: API_SERVER_URL,
-  headers: { 'Cache-Control': 'no-cache' },
-  timeout: 15000 
-}
-const dadaToken="5d14cbb232618388cf7ab1c71f84e283d3a3e9c0"
-const instance = axios.create(conf)
-const onError = (error) => {
+  headers: { "Cache-Control": "no-cache" },
+  timeout: 15000
+};
+const dadaToken = "5d14cbb232618388cf7ab1c71f84e283d3a3e9c0";
+const instance = axios.create(conf);
+const onError = error => {
   if (error.response) {
-      console.warn('axios onError', error.response)
+    console.warn("axios onError", error.response);
 
-      if (error.response.status === 400) {
-          throw Error('Не верный логин или пароль')
-      } else if (error.response.status > 400) {
-          throw Error('При обработке запроса на сервере произошла ошибка, мы ее зафиксировали и уже разбираемся в причинах.')
-      }
+    if (error.response.status === 400) {
+      throw Error("Не верный логин или пароль");
+    } else if (error.response.status > 400) {
+      throw Error(
+        "При обработке запроса на сервере произошла ошибка, мы ее зафиксировали и уже разбираемся в причинах."
+      );
+    }
   } else if (error.request) {
-      console.warn('axios onError', error.request)
-      throw Error('Сервер недоступен. Проверьте свое интернет-соединение')
+    console.warn("axios onError", error.request);
+    throw Error("Сервер недоступен. Проверьте свое интернет-соединение");
   } else {
-      console.warn('Error', error.message)
+    console.warn("Error", error.message);
   }
-  console.log(error.config)
-}
+  console.log(error.config);
+};
 
-const fetchAdressSuggestions=(queryText)=>{
-  let queryStr={ "query": queryText, "count": 10 };  
-  instance.defaults.headers.authorization=`Token ${dadaToken}`
-  return instance.post('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address', queryStr ).catch(onError)
-}
+const fetchAdressSuggestions = queryText => {
+  let queryStr = { query: queryText, count: 10 };
+  instance.defaults.headers.authorization = `Token ${dadaToken}`;
+  return instance
+    .post(
+      "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address",
+      queryStr
+    )
+    .catch(onError);
+};
+
+const fetchRoutes = points => {
+  const rndRoutesNumber = Math.round(Math.random() * 50);
+  let routesAr = [];
+  for (let index = 0; index < rndRoutesNumber; index++) {
+    let rndDistance = Math.round(Math.random() * 5000);
+    routesAr.push({ id: index, distance: rndDistance });
+  }
+
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(routesAr);
+    }, 500);
+  });
+};
 
 const fetchAllBuses = () => {
-  return AsyncStorage.getItem("@autoparkmobapp8:buses").then(response =>
+  return AsyncStorage.getItem("@autoparkmobapp10:buses").then(response =>
     JSON.parse(response)
   );
 };
 
 const addBus = async bus => {
   bus.id = "a" + Math.random() * 30000;
-  let buses = await AsyncStorage.getItem("@autoparkmobapp8:buses");
+  let buses = await AsyncStorage.getItem("@autoparkmobapp10:buses");
 
   let result = [];
   if (buses == null) {
@@ -50,45 +72,38 @@ const addBus = async bus => {
     busesAr.push(bus);
     result = busesAr;
   }
-  return AsyncStorage.setItem("@autoparkmobapp8:buses", JSON.stringify(result));
+  return AsyncStorage.setItem("@autoparkmobapp10:buses", JSON.stringify(result));
 };
 
 const updateBus = async bus => {
-  const buses = await AsyncStorage.getItem("@autoparkmobapp8:buses");
+  const buses = await AsyncStorage.getItem("@autoparkmobapp10:buses");
   const busesAr = JSON.parse(buses);
 
   let result = busesAr.filter(item => item.id != bus.id);
   result.push(bus);
-  return AsyncStorage.setItem(
-    "@autoparkmobapp8:buses",
-    JSON.stringify(result)
-  );
+  return AsyncStorage.setItem("@autoparkmobapp10:buses", JSON.stringify(result));
 };
 
-const removeBus= async bus => {
-  let buses = await AsyncStorage.getItem("@autoparkmobapp8:buses");
+const removeBus = async bus => {
+  let buses = await AsyncStorage.getItem("@autoparkmobapp10:buses");
   let result = [];
   if (buses != null) {
     result = JSON.parse(buses).filter(function(item) {
       return item.id != bus.id;
     });
   }
-  return AsyncStorage.setItem(
-    "@autoparkmobapp8:buses",
-    JSON.stringify(result)
-  );
+  return AsyncStorage.setItem("@autoparkmobapp10:buses", JSON.stringify(result));
 };
 
-
 const fetchAllDrivers = () => {
-  return AsyncStorage.getItem("@autoparkmobapp8:drivers").then(response =>
+  return AsyncStorage.getItem("@autoparkmobapp10:drivers").then(response =>
     JSON.parse(response)
   );
 };
 
 const addDriver = async driver => {
   driver.id = "a" + Math.random() * 30000;
-  let drivers = await AsyncStorage.getItem("@autoparkmobapp8:drivers");
+  let drivers = await AsyncStorage.getItem("@autoparkmobapp10:drivers");
 
   let result = [];
   if (drivers == null) {
@@ -99,25 +114,25 @@ const addDriver = async driver => {
     result = driverAr;
   }
   return AsyncStorage.setItem(
-    "@autoparkmobapp8:drivers",
+    "@autoparkmobapp10:drivers",
     JSON.stringify(result)
   );
 };
 
 const updateDriver = async driver => {
-  const items = await AsyncStorage.getItem("@autoparkmobapp8:drivers");
+  const items = await AsyncStorage.getItem("@autoparkmobapp10:drivers");
   const itemsAr = JSON.parse(items);
 
   let result = itemsAr.filter(item => item.id != driver.id);
   result.push(driver);
   return AsyncStorage.setItem(
-    "@autoparkmobapp8:drivers",
+    "@autoparkmobapp10:drivers",
     JSON.stringify(result)
   );
 };
 
 const removeDriver = async driver => {
-  let items = await AsyncStorage.getItem("@autoparkmobapp8:drivers");
+  let items = await AsyncStorage.getItem("@autoparkmobapp10:drivers");
   let result = [];
   if (items != null) {
     result = JSON.parse(items).filter(function(item) {
@@ -125,7 +140,7 @@ const removeDriver = async driver => {
     });
   }
   return AsyncStorage.setItem(
-    "@autoparkmobapp8:drivers",
+    "@autoparkmobapp10:drivers",
     JSON.stringify(result)
   );
 };
@@ -140,5 +155,6 @@ export default {
   addDriver,
   updateDriver,
   removeDriver,
-  fetchAdressSuggestions
+  fetchAdressSuggestions,
+  fetchRoutes
 };
