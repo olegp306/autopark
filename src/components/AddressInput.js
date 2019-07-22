@@ -71,7 +71,7 @@ class AddressInput extends Component {
           defaultIndex={2}
           resetValue={false}
           textInputProps={{
-            placeholder: "placeholder",
+            placeholder: "введите адрес (dadata поможет)",
             underlineColorAndroid: "transparent",
             style: {
               padding: 12,
