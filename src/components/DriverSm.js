@@ -8,16 +8,16 @@ export default class DriverSm extends Component {
   }
 
   render() {
-    const { fullName, birthday, busAbleToDrive } = this.props.driver;
-    const busAbleToDriveNamesAr = busAbleToDrive.map(function(item) {
-      return item["label"];
-    });
+    const { fullName, birthday, busesNamesAr } = this.props.driver;
+    // const busesAbleToDriveNamesAr = busesAbleToDrive.map(function(item) {
+    //   return item["label"];
+    // });
     return (
       <View style={styles.driverSmall}>
-        <Text style={styles.fullNameText}>{fullName}</Text>
-        <Text style={styles.driverSmall}>{birthday}</Text>
-        <Text style={styles.driverSmall}>
-          {busAbleToDriveNamesAr.join(", ")}
+        <Text style={styles.fullNameText}>{"ФИО: " +fullName}</Text>
+        <Text style={styles.birthdayText}>{"Дата рождения: " +birthday}</Text>
+        <Text style={styles.busesText}>
+          { "Умеет управлять: " + this.props.busesNamesAr.join(", ")}
         </Text>
       </View>
     );
@@ -25,17 +25,24 @@ export default class DriverSm extends Component {
 }
 const styles = StyleSheet.create({
   driverSmall: {
-    marginTop: 15,
-    // borderWidth: 0.5,
+    marginTop: 5,  
     borderColor: "#eaeaea",
     justifyContent: "center"
   },
   fullNameText: {
-    fontWeight: "bold",
-    color: "#53565A",
-    fontSize: 16,
-    alignSelf: "center",
-    marginBottom: 10
+    fontWeight: "500",
+    fontSize: 20,
+    marginLeft: 10
+  },
+  birthdayText:{
+    fontWeight: "500",
+    fontSize: 15,
+    marginLeft: 10
+  },
+  busesText:{
+    fontWeight: "500",
+    fontSize: 15,
+    marginLeft: 10
   },
   textSmall: {
     fontWeight: "bold",
