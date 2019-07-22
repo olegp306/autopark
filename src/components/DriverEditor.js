@@ -10,23 +10,21 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { Fumi } from "react-native-textinput-effects";
 import DatePicker from "react-native-datepicker";
 import ModalSelector from "react-native-modal-selector";
+import _ from "lodash"
 
-const busTypes = [
-  { id: 1, key: 1, label: "ЛИАЗ" },
-  { id: 2, key: 2, label: "ПАЗ" },
-  { id: 3, key: 3, label: "Экарус" }
-];
 
 export default class DriverEditor extends Component {
+
   busesAbleToDriveRender = () => {
-    const { driver, removeBusAbleToDrive } = this.props;
-    let sourceItems = driver.busAbleToDrive.map(function(item, index) {
+    const { driver, removeBusAbleToDrive , buses} = this.props;
+    const busesAr=_.keyBy(buses.items,"id");
+    let sourceItems = driver.busesAbleToDrive.map(function(item, index) {
       return (
         <TouchableOpacity
           style={styles.busTypeContainer}
           onPress={() => removeBusAbleToDrive(item)}
         >
-          <Text style={styles.busTypeText}>{item.label}</Text>
+          <Text style={styles.busTypeText}>{busesAr[item.busId].name}</Text>
         </TouchableOpacity>
       );
     });
@@ -34,10 +32,18 @@ export default class DriverEditor extends Component {
   };
 
   render() {
-    const { driver, updateFIO, updateBirthday, selectBusModel } = this.props;
-    const notUsedBusTypes = busTypes.filter(
-      item => !driver.busAbleToDrive.includes(item)
-    );
+    const { driver, buses, updateFIO, updateBirthday, selectBusModel } = this.props;
+    const driverBusesAr=_.keyBy(driver.busesAbleToDrive,"busId");
+    // const busesAr=_keyBY(buses.items,"id");
+
+    const notUsedBusesTypes = buses.items.filter(function(item) {
+      return  !(driverBusesAr.hasOwnProperty (item.id))
+    });
+
+    const notUsedBusesForModal = notUsedBusesTypes.map(function(item) {
+      return {id:item.id,key:item.id,label:item.name}
+    });
+
     return (
       <View
         style={{
@@ -100,11 +106,11 @@ export default class DriverEditor extends Component {
               Выберите Модели автобусов, которыми способен управлять водитель:
             </Text>
             {this.busesAbleToDriveRender()}
-            {notUsedBusTypes.length != 0 ? (
+            {notUsedBusesTypes.length != 0 ? (
               <ModalSelector
                 key={new Date()}
                 initValue="+ добавить тип автобуса"
-                data={notUsedBusTypes}
+                data={notUsedBusesForModal}
                 style={{ margin: 8 }}
                 cancelText="Отмена"
                 onChange={selectBusModel}
