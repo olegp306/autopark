@@ -14,21 +14,22 @@ export default class MainScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.head}>
-          <Text style={styles.headText}>auto park</Text>
+          <Text style={styles.headText}>autopark</Text>
         </View>
         <View style={styles.content}>
-          <BigButtonWithBadgeComponent
-            buttonText={"водители"}
-            buttonSmallText={"добавление правка удаление просмотр"}
-            onPress={() => this.props.navigation.navigate("Drivers")}
-          />
+         
           <BigButtonWithBadgeComponent
             buttonText={"автобусы"}
             buttonSmallText={"добавление правка удаление просмотр"}
             onPress={() => this.props.navigation.navigate("Buses")}
           />
+           <BigButtonWithBadgeComponent
+            buttonText={"водители"}
+            buttonSmallText={"добавление правка удаление просмотр"}
+            onPress={() => this.props.navigation.navigate("Drivers")}
+          />
           <BigButtonWithBadgeComponent
-            buttonText={"маршрут"}
+            buttonText={"маршруты"}
             buttonSmallText={"поиск маршрутов между точками"}
             onPress={() => this.props.navigation.navigate("RoutePoints")}
           />
@@ -49,11 +50,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-around"
   },
   head: {
-    height: "35%",
+    height: "40%",
     justifyContent: "center"
   },
   content: {
-    height: "55%",
+    height: "50%",
     width: "80%",
     justifyContent: "space-around"
   },
@@ -62,7 +63,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around" 
   },
   headText: {
-    fontSize: 40,
+    fontSize: 50,
+    fontWeight:'500',
     textAlign: "center",
     color: "gray"
   },
