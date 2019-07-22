@@ -12,8 +12,8 @@ export default class BusSm extends Component {
   
     return (
       <View style={styles.busSmall}>
-        <Text style={styles.nameText}>{name}</Text>
-        <Text style={styles.busSmall}>{"Максимальная скорость:" + maxSpeed}</Text>   
+        <Text style={styles.nameText}>{"Название:" +name}</Text>
+        <Text style={styles.maxSpeedText}>{"Максимальная скорость:" + maxSpeed}</Text>   
       </View>
     );
   }
@@ -25,12 +25,20 @@ const styles = StyleSheet.create({
     borderColor: "#eaeaea",
     justifyContent: "center"
   },
+  fullNameText: {
+    fontWeight: "500",
+    fontSize: 20,
+    marginLeft: 10
+  },
+  maxSpeedText:{
+    fontWeight: "500",
+    fontSize: 15,
+    marginLeft: 10
+  },
   nameText: {
-    fontWeight: "bold",
-    color: "#53565A",
-    fontSize: 16,
-    alignSelf: "center",
-    marginBottom: 10
+    fontWeight: "500",
+    fontSize: 20,
+    marginLeft: 10
   },
   textSmall: {
     fontWeight: "bold",
